@@ -8,12 +8,12 @@ from app.agent import (
     generate_rationale,
     summarize_journal,
     generate_twin_message,
-    generate_opportunities,
+    generate_opportunity_pitch,
 )
 from app.fusion_engine import (
     pick_recommendation_type,
     pick_weakest_priority_pillar,
-    pick_completed_pillars,
+    pick_eligible_opportunities,
 )
 from app.db import supabase
 
@@ -22,6 +22,9 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 
 with open(os.path.join(os.path.dirname(__file__), "..", "..", "content", "dataset.json")) as f:
     CONTENT = json.load(f)
+
+with open(os.path.join(os.path.dirname(__file__), "..", "..", "content", "opportunities.json")) as f:
+    OPPORTUNITIES = json.load(f)
 
 
 class OnboardRequest(BaseModel):
@@ -105,18 +108,33 @@ def timeline(user_id: str):
 class OpportunitiesRequest(BaseModel):
     future_self_statement: str
     pillars: list[dict]  # [{name, mastery_score, priority_weight}]
-    mastery_threshold: int = 70  # matches fusion_engine.pick_completed_pillars default
+    mastery_threshold: int = 60  # matches fusion_engine.pick_completed_pillars default
 
 
 @app.post("/api/opportunities")
 def opportunities(req: OpportunitiesRequest):
-    """AI Opportunity Discovery (NEW). fusion_engine decides — deterministically
-    — which pillars are actually done enough to act on; agent.py then asks
-    Gemini what real-world opportunities fit that specific combination.
-    Returns an empty list (not an error) if nothing has cleared the bar yet,
-    so the frontend can simply hide the opportunities panel in that case."""
-    completed = pick_completed_pillars(req.pillars, req.mastery_threshold)
-    if not completed:
-        return {"completed_pillars": [], "opportunities": []}
-    opportunities = generate_opportunities(req.future_self_statement, completed)
-    return {"completed_pillars": [p["name"] for p in completed], "opportunities": opportunities}
+
+    eligible = pick_eligible_opportunities(
+        req.pillars,
+        OPPORTUNITIES,
+        req.mastery_threshold,
+    )
+
+    results = []
+
+    for opp in eligible:
+        pitch = generate_opportunity_pitch(
+            opp["matched_pillars"],
+            opp["title"],
+        )
+
+        results.append(
+            {
+                **opp,
+                "pitch": pitch,
+            }
+        )
+
+    return {
+        "opportunities": results
+    }
