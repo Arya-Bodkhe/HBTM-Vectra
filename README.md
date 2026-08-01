@@ -1,6 +1,5 @@
 # Kairos
-
-**Understand · Reason · Recommend · Redirect · Reflect**
+**Understand · Reason · Recommend · Redirect · Reflect · Discover**
 
 Team VECTRA — built at the IIIT Pune 24-Hour Hackathon (HBTM x IABTM), for the
 theme "Agentic AI for Human Potential."
@@ -27,6 +26,12 @@ that overwrites itself. And if you want a nudge, you can open a short chat
 with your own future self — grounded in your real pillar data, not a canned
 response.
 
+Once a pillar stops being a gap — mastery score high enough that you're
+genuinely strong in it, not just improving — Kairos stops recommending
+content for it and starts surfacing what you can *do* with it instead: real
+programs, competitions, internships, meetups, and scholarships that fit what
+you've actually built. Learning doesn't just loop back into more learning.
+
 ## Why it's different
 
 - **Gap, not match.** We're not filtering by interest tags — we're tracking
@@ -39,6 +44,13 @@ response.
 - **It closes the loop.** The future-self chat and the growth timeline turn
   "your gap is closing" from a claim into something you can actually see and
   talk to.
+- **It doesn't stop at content.** AI Opportunity Discovery is the part almost
+  no recommendation system does: once you've actually built mastery in
+  something — say Fashion, Branding, and Instagram Marketing — instead of
+  recommending you *another* course, Kairos tells you what you're now
+  eligible for: a Brand Ambassador Program, a Fashion Internship, a Content
+  Creator Competition, local Fashion Meetups, relevant scholarships. Instead
+  of learning forever, the AI connects learning to opportunities.
 
 Runs entirely on free tiers — Gemini via AI Studio, Supabase, Render, Vercel.
 No card needed anywhere.
@@ -49,14 +61,13 @@ No card needed anywhere.
 flowchart TD
     FE["Frontend — React + Tailwind + Recharts (Garima)"]
     subgraph BE["Backend — FastAPI"]
-        AG["agent.py — Gemini calls: pillars, rationale, journal scoring, future-self (Arya)"]
-        FS["fusion_engine.py — the decision table, deterministic (Arya)"]
+        AG["agent.py — Gemini calls: pillars, rationale, journal scoring, future-self, opportunities (Arya)"]
+        FS["fusion_engine.py — the decision table + completed-pillar gate, deterministic (Arya)"]
         MAIN["main.py — glue between all of it (Srushti)"]
     end
     GEM["Gemini API"]
     SUP["Supabase — identity graph + mastery history (Srushti)"]
     CON["content/dataset.json — curated, tagged (Janhavi)"]
-
     FE -->|REST| MAIN
     MAIN --> AG
     MAIN --> FS
@@ -65,9 +76,10 @@ flowchart TD
     MAIN --> CON
 ```
 
-The logic (decision table) and the intelligence (Gemini calls) are kept in
-separate files on purpose — one's deterministic, one's generative, and we
-didn't want them tangled together. `main.py` is just the wiring.
+The logic (decision table, and which pillars count as "completed" enough to
+act on) and the intelligence (Gemini calls) are kept in separate files on
+purpose — one's deterministic, one's generative, and we didn't want them
+tangled together. `main.py` is just the wiring.
 
 ## Team
 
@@ -97,7 +109,7 @@ these get committed — check `.gitignore`.
 
 ## Endpoints
 
-`/api/onboard` · `/api/recommend` · `/api/journal` · `/api/twin-message` · `/api/timeline`
+`/api/onboard` · `/api/recommend` · `/api/journal` · `/api/twin-message` · `/api/timeline` · `/api/opportunities`
 
 ## Deployed
 
