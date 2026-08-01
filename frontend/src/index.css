@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(60% 46% at 88% 0%, rgba(229, 107, 50, 0.1), transparent 60%),
+    radial-gradient(40% 30% at 6% 8%, rgba(169, 131, 91, 0.08), transparent 60%),
+    #fbf6ed;
+  min-height: 100vh;
+}
+
+@layer components {
+  .card {
+    @apply bg-white border border-line rounded-card shadow-card;
+  }
+  .btn {
+    @apply rounded-pill font-bold cursor-pointer transition-all duration-150 px-7 py-4 text-[15px] disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-white shadow-[0_10px_24px_-10px_rgba(229,107,50,0.6)] hover:bg-branddeep hover:-translate-y-px disabled:bg-brandsoft disabled:shadow-none disabled:translate-y-0;
+  }
+  .btn-ghost {
+    @apply btn bg-white text-ink border border-line hover:border-inkfaint;
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-[13.5px];
+  }
+  .chip {
+    @apply border border-line bg-white text-inksoft px-4.5 py-2.5 rounded-pill text-sm cursor-pointer transition-colors hover:border-brand hover:text-ink;
+  }
+  .eyebrow {
+    @apply uppercase tracking-[.14em] text-[12.5px] font-bold text-branddeep mb-3.5;
+  }
+  .spin {
+    @apply w-3.5 h-3.5 rounded-full border-2 border-brandsoft border-t-brand animate-spin;
+  }
+}
