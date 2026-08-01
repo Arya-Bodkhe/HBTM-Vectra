@@ -1,0 +1,42 @@
+[
+  {
+    "id": "o001",
+    "title": "Local Fashion Meetup Circuit",
+    "type": "community",
+    "url": "https://example.com/fashion-meetups",
+    "tags": ["branding", "instagram marketing"],
+    "min_mastery": 60
+  },
+  {
+    "id": "o002",
+    "title": "Brand Ambassador Program — StyleCo",
+    "type": "internship",
+    "url": "https://example.com/styleco-ambassador",
+    "tags": ["fashion", "instagram marketing"],
+    "min_mastery": 70
+  },
+  {
+    "id": "o003",
+    "title": "Content Creator Competition — Spring Edition",
+    "type": "competition",
+    "url": "https://example.com/creator-competition",
+    "tags": ["branding", "content creation"],
+    "min_mastery": 65
+  },
+  {
+    "id": "o004",
+    "title": "Fashion Marketing Micro-Internship",
+    "type": "internship",
+    "url": "https://example.com/fashion-internship",
+    "tags": ["fashion", "branding"],
+    "min_mastery": 70
+  },
+  {
+    "id": "o005",
+    "title": "Emerging Creators Scholarship",
+    "type": "scholarship",
+    "url": "https://example.com/creators-scholarship",
+    "tags": ["storytelling", "instagram marketing"],
+    "min_mastery": 60
+  }
+]
